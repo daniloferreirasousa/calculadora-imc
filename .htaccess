@@ -1,0 +1,34 @@
+#Indexação de pastas
+Options -Indexes
+
+RewriteEngine On
+
+#Reescrita de URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ ./erro.php [NC]
+
+
+RewriteCond %{QUERY_STRING} "script"
+RewriteRule .* - [F]
+
+
+#Páginas de erro
+ErrorDocument 404 /erros/erro.php
+
+
+
+#Bloqueio de Arquivos
+<FilesMatch "\.json">
+  Deny from all
+</FilesMatch>
+
+<FilesMatch "\.lock">
+  Deny from all
+</FilesMatch>
+
+
+#Bloqueio de MÉTODOS
+<Limit PUT DELETE>
+  Deny from all
+</Limit>
